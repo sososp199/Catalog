@@ -1,33 +1,14 @@
 package ge.space.catalog.screens.controls
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import ge.space.catalog.main.ui.shared.CatalogTopBar
+import ge.space.catalog.main.ui.SPDesignSystemComponent
+import ge.space.catalog.main.ui.shared.ComponentScreenContent
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-internal fun ButtonScreen(onNavigateUp: () -> Unit) {
-    Scaffold(
-        modifier = Modifier,
-        topBar = {
-            CatalogTopBar("Button", onNavigateUp)
-        },
-    ) { contentPadding: PaddingValues ->
-        Box(
-            Modifier
-                .fillMaxSize()
-                .verticalScroll(rememberScrollState())
-                .padding(contentPadding),
-        ) {
-            //Todo: add content
-        }
+internal fun ButtonScreen(item: SPDesignSystemComponent) {
+    ComponentScreenContent(title = item.title) {
+        //Todo: add content
     }
 }
