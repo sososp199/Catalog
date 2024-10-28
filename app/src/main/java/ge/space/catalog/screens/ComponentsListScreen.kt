@@ -39,7 +39,7 @@ internal fun ComponentsListScreen(
             horizontalArrangement = Arrangement.spacedBy(8.dp),
         ) {
             component.innerComponents.map { item ->
-                MenuItem(item.title, item.icon, onClick = {
+                MenuItem(item.title, onClick = {
                     navigator.navigate(item.title)
                 })
             }.let { items(it) { item -> MenuItem(item) } }

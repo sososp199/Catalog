@@ -5,7 +5,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.compositionLocalOf
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.platform.LocalDensity
@@ -18,13 +17,11 @@ import ge.space.catalog.SPDesignSystemComponents.controls
 import ge.space.catalog.SPDesignSystemComponents.foundation
 import ge.space.catalog.main.ui.SPDesignSystemComponent
 import ge.space.catalog.screens.MainScreen
-import kotlinx.serialization.ExperimentalSerializationApi
 
 internal val LocalNavController = compositionLocalOf<NavHostController> {
     error("No LocalNavController provided")
 }
 
-@OptIn(ExperimentalSerializationApi::class, ExperimentalComposeUiApi::class)
 @Composable
 internal fun NavGraph(
     onThemeToggle: (offset: Offset) -> Unit,

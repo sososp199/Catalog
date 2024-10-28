@@ -10,7 +10,6 @@ import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyGridScope
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.material.icons.rounded.BrightnessMedium
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -26,6 +25,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.layout.positionInWindow
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.center
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.toOffset
@@ -33,7 +33,7 @@ import ge.space.catalog.SPDesignSystemComponents.controls
 import ge.space.catalog.SPDesignSystemComponents.foundation
 import ge.space.catalog.main.ui.shared.MenuItem
 import ge.space.catalog.main.utils.plus
-import androidx.compose.material.icons.Icons.Rounded as MIcons
+import ge.space.catalog.R
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -55,7 +55,10 @@ internal fun MainScreen(
                         },
                         onClick = { onThemeToggle(offset) },
                     ) {
-                        Icon(MIcons.BrightnessMedium, contentDescription = null)
+                        Icon(
+                            painter = painterResource(id = R.drawable.ic_dark_theme),
+                            contentDescription = null
+                        )
                     }
                 },
             )
@@ -68,12 +71,12 @@ internal fun MainScreen(
             horizontalArrangement = Arrangement.spacedBy(8.dp),
         ) {
             cardItems("Foundation", foundation.map { item ->
-                MenuItem(item.title, item.icon, onClick = {
+                MenuItem(item.title, onClick = {
                     onNavigate(item.title)
                 })
             })
             cardItems("Controls", controls.map { item ->
-                MenuItem(item.title, item.icon, onClick = { onNavigate(item.title) })
+                MenuItem(item.title, onClick = { onNavigate(item.title) })
             })
         }
     }
