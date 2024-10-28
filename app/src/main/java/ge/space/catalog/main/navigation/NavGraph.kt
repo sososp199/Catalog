@@ -1,9 +1,12 @@
 package ge.space.catalog.main.navigation
 
+import androidx.compose.foundation.background
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.ui.ExperimentalComposeUiApi
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.platform.LocalDensity
 import androidx.navigation.NavGraphBuilder
@@ -31,6 +34,7 @@ internal fun NavGraph(
 
     CompositionLocalProvider(LocalNavController provides navController) {
         NavHost(
+            modifier = Modifier.background(MaterialTheme.colorScheme.background),
             navController = navController,
             startDestination = MAIN_SCREEN_ROUTE,
             enterTransition = { SharedXAxisEnterTransition(density) },
