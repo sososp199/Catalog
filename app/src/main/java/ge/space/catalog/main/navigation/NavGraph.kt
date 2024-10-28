@@ -13,7 +13,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import ge.space.catalog.SPDesignSystemComponents.controls
+import ge.space.catalog.SPDesignSystemComponents.components
 import ge.space.catalog.SPDesignSystemComponents.foundation
 import ge.space.catalog.main.ui.SPDesignSystemComponent
 import ge.space.catalog.screens.MainScreen
@@ -42,14 +42,14 @@ internal fun NavGraph(
             composable(MAIN_SCREEN_ROUTE) {
                 MainScreen(navController::navigate, onThemeToggle)
             }
-            addComposableRoutes((foundation + controls))
+            addComposableRoutes((foundation + components))
         }
     }
 }
 
 internal fun NavGraphBuilder.addComposableRoutes(components: List<SPDesignSystemComponent>) {
     components.forEach { item ->
-        composable(item.title) {
+        composable(item.titleRes.toString()) {
             item.screen(item)
         }
         // Recursively add inner components

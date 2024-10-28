@@ -8,7 +8,7 @@ import ge.space.catalog.main.ui.shared.ComponentScreenContent
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun ButtonScreen(item: SPDesignSystemComponent) {
-    ComponentScreenContent(title = item.title) {
+    ComponentScreenContent(title = item.titleRes) {
         //Todo: add content
     }
 }

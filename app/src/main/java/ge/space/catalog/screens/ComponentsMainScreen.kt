@@ -1,6 +1,7 @@
 package ge.space.catalog.screens
 
 import androidx.activity.compose.ReportDrawn
+import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -26,10 +27,11 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.layout.positionInWindow
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.center
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.toOffset
-import ge.space.catalog.SPDesignSystemComponents.controls
+import ge.space.catalog.SPDesignSystemComponents.components
 import ge.space.catalog.SPDesignSystemComponents.foundation
 import ge.space.catalog.main.ui.shared.MenuItem
 import ge.space.catalog.main.utils.plus
@@ -70,13 +72,13 @@ internal fun MainScreen(
             verticalArrangement = Arrangement.spacedBy(8.dp),
             horizontalArrangement = Arrangement.spacedBy(8.dp),
         ) {
-            cardItems("Foundation", foundation.map { item ->
-                MenuItem(item.title, onClick = {
-                    onNavigate(item.title)
+            cardItems(R.string.category_title_foundation, foundation.map { item ->
+                MenuItem(item.titleRes, onClick = {
+                    onNavigate(item.titleRes.toString())
                 })
             })
-            cardItems("Controls", controls.map { item ->
-                MenuItem(item.title, onClick = { onNavigate(item.title) })
+            cardItems(R.string.category_title_components, components.map { item ->
+                MenuItem(item.titleRes, onClick = { onNavigate(item.titleRes.toString()) })
             })
         }
     }
@@ -85,12 +87,12 @@ internal fun MainScreen(
 }
 
 private fun LazyGridScope.cardItems(
-    title: String,
+    @StringRes title: Int,
     items: List<MenuItem>,
 ) {
     item(span = { GridItemSpan(maxLineSpan) }) {
         Text(
-            text = title,
+            text = stringResource(title),
             modifier = Modifier.padding(vertical = 4.dp),
         )
     }

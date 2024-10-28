@@ -11,6 +11,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import ge.space.catalog.main.navigation.LocalNavController
 import ge.space.catalog.main.ui.SPDesignSystemComponent
@@ -29,7 +30,7 @@ internal fun ComponentsListScreen(
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         topBar = {
-            ComponentScreenTopBar(component.title)
+            ComponentScreenTopBar(stringResource(component.titleRes))
         },
     ) { contentPadding ->
         LazyVerticalGrid(
@@ -39,8 +40,8 @@ internal fun ComponentsListScreen(
             horizontalArrangement = Arrangement.spacedBy(8.dp),
         ) {
             component.innerComponents.map { item ->
-                MenuItem(item.title, onClick = {
-                    navigator.navigate(item.title)
+                MenuItem(item.titleRes, onClick = {
+                    navigator.navigate(item.titleRes.toString())
                 })
             }.let { items(it) { item -> MenuItem(item) } }
         }

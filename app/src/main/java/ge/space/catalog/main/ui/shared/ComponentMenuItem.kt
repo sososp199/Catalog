@@ -1,5 +1,6 @@
 package ge.space.catalog.main.ui.shared
 
+import androidx.annotation.StringRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -13,11 +14,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 
 internal data class MenuItem(
-    val title: String,
+    @StringRes val title: Int,
     val onClick: () -> Unit
 )
 
@@ -36,7 +38,7 @@ internal fun MenuItem(menuItem: MenuItem) {
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Center
         ) {
-            Text(menuItem.title, maxLines = 1, overflow = TextOverflow.Ellipsis)
+            Text(stringResource(menuItem.title), maxLines = 1, overflow = TextOverflow.Ellipsis)
         }
     }
 }
