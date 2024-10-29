@@ -14,7 +14,6 @@ internal fun Catalog(activity: MainActivity) {
     var isLightThemeUser by rememberSaveable { mutableStateOf<Boolean?>(null) }
     val isLightThemeFinal = isLightThemeUser ?: !isSystemInDarkTheme()
 
-
     AnimatedAppTheme(
         isLightTheme = isLightThemeFinal,
         onThemeToggle = { isLight ->
@@ -24,5 +23,4 @@ internal fun Catalog(activity: MainActivity) {
     ) { onThemeToggle ->
         NavGraph(onThemeToggle)
     }
-
 }

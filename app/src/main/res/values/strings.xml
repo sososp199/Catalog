@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">Catalog</string>
+    <string name="search_hint">"Search…"</string>
+    <string name="category_title_foundation">Foundation</string>
+    <string name="category_title_components">Components</string>
+    <string name="component_title_colors">Colors</string>
+    <string name="component_title_icons">Icons</string>
+    <string name="component_title_illustrations">Illustrations</string>
+    <string name="component_title_typography">Typography</string>
+    <string name="component_title_button">Button</string>
+    <string name="component_title_list_sample">List Sample</string>
+    <string name="component_title_component1">Component1</string>
+    <string name="component_title_component2">Component2</string>"
 </resources>
