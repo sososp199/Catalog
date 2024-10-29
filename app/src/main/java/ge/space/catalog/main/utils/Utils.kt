@@ -3,6 +3,7 @@ package ge.space.catalog.main.utils
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.LayoutDirection
+import ge.space.catalog.main.ui.SPDesignSystemComponent
 
 operator fun PaddingValues.plus(other: PaddingValues): PaddingValues =
     UnionPaddingValues(this, other)
@@ -22,4 +23,13 @@ private class UnionPaddingValues(
 
     override fun calculateTopPadding(): Dp =
         a.calculateTopPadding() + b.calculateTopPadding()
+}
+
+internal fun List<SPDesignSystemComponent>.flatten(): List<SPDesignSystemComponent> {
+    val result = mutableListOf<SPDesignSystemComponent>()
+    forEach {
+        result.add(it)
+        result.addAll(it.innerComponents.flatten())
+    }
+    return result
 }
