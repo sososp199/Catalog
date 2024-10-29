@@ -13,7 +13,15 @@ import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.dp
 
 
-internal val SharedXAxisPopEnterTransition: (Density) -> EnterTransition = { density ->
+/**
+ * Enter transition for shared axis X.
+ *
+ * This transition combines a fade-in and slide-in horizontally from the left.
+ *
+ * @param density The density of the screen.
+ * @return The enter transition.
+ */
+internal val SharedXAxisEnterTransition: (Density) -> EnterTransition = { density ->
     fadeIn(
         animationSpec = tween(
             durationMillis = 210, delayMillis = 90, easing = LinearOutSlowInEasing
@@ -23,6 +31,14 @@ internal val SharedXAxisPopEnterTransition: (Density) -> EnterTransition = { den
     }
 }
 
+/**
+ * Exit transition for shared axis X.
+ *
+ * This transition combines a fade-out and slide-out horizontally to the left.
+ *
+ * @param density The density of the screen.
+ * @return The exit transition.
+ */
 internal val SharedXAxisExitTransition: (Density) -> ExitTransition = { density ->
     fadeOut(
         animationSpec = tween(
@@ -33,6 +49,14 @@ internal val SharedXAxisExitTransition: (Density) -> ExitTransition = { density 
     }
 }
 
+/**
+ * Pop exit transition for shared axis X.
+ *
+ * This transition combines a fade-out and slide-out horizontally to the right.
+ *
+ * @param density The density of the screen.
+ * @return The pop exit transition.
+ */
 internal val SharedXAxisPopExitTransition: (Density) -> ExitTransition = { density ->
     fadeOut(
         animationSpec = tween(
@@ -43,7 +67,15 @@ internal val SharedXAxisPopExitTransition: (Density) -> ExitTransition = { densi
     }
 }
 
-internal val SharedXAxisEnterTransition: (Density) -> EnterTransition = { density ->
+/**
+ * Pop enter transition for shared axis X.
+ *
+ * This transition combines a fade-in and slide-in horizontally from the right.
+ *
+ * @param density The density of the screen.
+ * @return The pop enter transition.
+ */
+internal val SharedXAxisPopEnterTransition: (Density) -> EnterTransition = { density ->
     fadeIn(
         animationSpec = tween(
             durationMillis = 210, delayMillis = 90, easing = LinearOutSlowInEasing

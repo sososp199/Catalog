@@ -10,6 +10,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 
+/**
+ * Composable function that displays the content of a component screen.
+ *
+ * This function provides a basic layout for a component screen, including a top app bar with
+ * the provided title and a content area where the [content] composable is displayed.
+ *
+ * @param title The string resource ID for the title of the screen.
+ * @param content The composable content to be displayed on the screen.
+ */
 @Composable
 internal fun ComponentScreenContent(
     @StringRes title: Int,

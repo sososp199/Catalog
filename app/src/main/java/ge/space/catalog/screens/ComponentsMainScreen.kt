@@ -32,6 +32,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusManager
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.geometry.Offset
@@ -45,9 +46,9 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.center
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.toOffset
+import ge.space.catalog.DesignSystemComponents.components
+import ge.space.catalog.DesignSystemComponents.foundation
 import ge.space.catalog.R
-import ge.space.catalog.SPDesignSystemComponents.components
-import ge.space.catalog.SPDesignSystemComponents.foundation
 import ge.space.catalog.main.ui.shared.MenuItem
 import ge.space.catalog.main.utils.flatten
 import ge.space.catalog.main.utils.plus
@@ -55,93 +56,30 @@ import kotlinx.coroutines.android.awaitFrame
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-internal fun MainScreen(
+internal fun ComponentsMainScreen(
     onNavigate: (String) -> Unit,
     onThemeToggle: (Offset) -> Unit,
 ) {
     var searchQuery by rememberSaveable(stateSaver = TextFieldValue.Saver) {
-        mutableStateOf(
-            TextFieldValue("")
-        )
+        mutableStateOf(TextFieldValue(""))
     }
     var isSearchExpanded by rememberSaveable { mutableStateOf(false) }
     val focusManager = LocalFocusManager.current
     val searchFocusRequester = remember { FocusRequester() }
 
-    // Flatten the component lists
     val flattenedComponents = remember { (foundation + components).flatten() }
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         topBar = {
-            TopAppBar(
-                title = {
-                    if (isSearchExpanded) {
-                        TextField(
-                            value = searchQuery,
-                            onValueChange = { searchQuery = it },
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .focusRequester(searchFocusRequester),
-                            placeholder = { Text(stringResource(R.string.search_hint)) },
-                            singleLine = true,
-                            colors = TextFieldDefaults.colors(
-                                focusedTextColor = MaterialTheme.colorScheme.onSurface,
-                                unfocusedTextColor = MaterialTheme.colorScheme.onSurfaceVariant,
-                                focusedContainerColor = Color.Transparent,
-                                unfocusedContainerColor = Color.Transparent,
-                                cursorColor = MaterialTheme.colorScheme.primary,
-                                focusedIndicatorColor = MaterialTheme.colorScheme.primary,
-                                unfocusedIndicatorColor = MaterialTheme.colorScheme.onSurfaceVariant,
-                                focusedPlaceholderColor = MaterialTheme.colorScheme.onSurfaceVariant,
-                                unfocusedPlaceholderColor = MaterialTheme.colorScheme.onSurfaceVariant
-                            ),
-                            trailingIcon = {
-                                IconButton(onClick = {
-                                    searchQuery = TextFieldValue("")
-                                    isSearchExpanded = false
-                                    focusManager.clearFocus()
-                                }) {
-                                    Icon(
-                                        imageVector = Icons.Default.Close,
-                                        contentDescription = "Close Search"
-                                    )
-                                }
-                            }
-                        )
-
-                        LaunchedEffect(isSearchExpanded) {
-                            if (isSearchExpanded) {
-                                awaitFrame()
-                                searchFocusRequester.requestFocus()
-                            }
-                        }
-                    } else {
-                        Text(stringResource(R.string.app_name))
-                    }
-                },
-                actions = {
-                    if (!isSearchExpanded) {
-                        IconButton(onClick = { isSearchExpanded = true }) {
-                            Icon(
-                                imageVector = Icons.Default.Search,
-                                contentDescription = null
-                            )
-                        }
-                    }
-                    var offset by remember { mutableStateOf(Offset(0f, 0f)) }
-                    IconButton(
-                        modifier = Modifier.onGloballyPositioned {
-                            offset = it.positionInWindow() + it.size.center.toOffset()
-                        },
-                        onClick = { onThemeToggle(offset) },
-                    ) {
-                        Icon(
-                            painter = painterResource(id = R.drawable.ic_dark_theme),
-                            contentDescription = null
-                        )
-                    }
-                }
+            MainScreenTopAppBar(
+                searchQuery = searchQuery,
+                isSearchExpanded = isSearchExpanded,
+                onSearchQueryChange = { searchQuery = it },
+                onSearchExpandedChange = { isSearchExpanded = it },
+                searchFocusRequester = searchFocusRequester,
+                focusManager = focusManager,
+                onThemeToggle = onThemeToggle
             )
         }
     ) { contentPadding ->
@@ -186,6 +124,100 @@ internal fun MainScreen(
     ReportDrawn()
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun MainScreenTopAppBar(
+    searchQuery: TextFieldValue,
+    isSearchExpanded: Boolean,
+    onSearchQueryChange: (TextFieldValue) -> Unit,
+    onSearchExpandedChange: (Boolean) -> Unit,
+    searchFocusRequester: FocusRequester,
+    focusManager: FocusManager,
+    onThemeToggle: (Offset) -> Unit
+) {
+    TopAppBar(
+        title = {
+            if (isSearchExpanded) {
+                ExpandedSearchField(
+                    searchQuery = searchQuery,
+                    onSearchQueryChange = onSearchQueryChange,
+                    searchFocusRequester = searchFocusRequester,
+                    onCloseSearch = {
+                        onSearchQueryChange(TextFieldValue(""))
+                        onSearchExpandedChange(false)
+                        focusManager.clearFocus()
+                    }
+                )
+            } else {
+                Text(stringResource(R.string.app_name))
+            }
+        },
+        actions = {
+            if (!isSearchExpanded) {
+                IconButton(onClick = { onSearchExpandedChange(true) }) {
+                    Icon(
+                        imageVector = Icons.Default.Search,
+                        contentDescription = null
+                    )
+                }
+            }
+            var offset by remember { mutableStateOf(Offset(0f, 0f)) }
+            IconButton(
+                modifier = Modifier.onGloballyPositioned {
+                    offset = it.positionInWindow() + it.size.center.toOffset()
+                },
+                onClick = { onThemeToggle(offset) },
+            ) {
+                Icon(
+                    painter = painterResource(id = R.drawable.ic_dark_theme),
+                    contentDescription = null
+                )
+            }
+        }
+    )
+}
+
+@Composable
+private fun ExpandedSearchField(
+    searchQuery: TextFieldValue,
+    onSearchQueryChange: (TextFieldValue) -> Unit,
+    searchFocusRequester: FocusRequester,
+    onCloseSearch: () -> Unit
+) {
+    TextField(
+        value = searchQuery,
+        onValueChange = onSearchQueryChange,
+        modifier = Modifier
+            .fillMaxWidth()
+            .focusRequester(searchFocusRequester),
+        placeholder = { Text(stringResource(R.string.search_hint)) },
+        singleLine = true,
+        colors = TextFieldDefaults.colors(
+            focusedTextColor = MaterialTheme.colorScheme.onSurface,
+            unfocusedTextColor = MaterialTheme.colorScheme.onSurfaceVariant,
+            focusedContainerColor = Color.Transparent,
+            unfocusedContainerColor = Color.Transparent,
+            cursorColor = MaterialTheme.colorScheme.primary,
+            focusedIndicatorColor = MaterialTheme.colorScheme.primary,
+            unfocusedIndicatorColor = MaterialTheme.colorScheme.onSurfaceVariant,
+            focusedPlaceholderColor = MaterialTheme.colorScheme.onSurfaceVariant,
+            unfocusedPlaceholderColor = MaterialTheme.colorScheme.onSurfaceVariant
+        ),
+        trailingIcon = {
+            IconButton(onClick = onCloseSearch) {
+                Icon(
+                    imageVector = Icons.Default.Close,
+                    contentDescription = "Close Search"
+                )
+            }
+        }
+    )
+
+    LaunchedEffect(true) {
+        awaitFrame()
+        searchFocusRequester.requestFocus()
+    }
+}
 
 private fun LazyGridScope.cardItems(
     @StringRes title: Int,

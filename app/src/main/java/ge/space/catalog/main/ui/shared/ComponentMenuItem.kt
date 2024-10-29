@@ -18,11 +18,26 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 
+/**
+ * Data class representing a menu item with a title and an action.
+ *
+ * @property title The string resource ID for the title of the menu item.
+ * @property onClick The action to be performed when the menu item is clicked.
+ */
 internal data class MenuItem(
     @StringRes val title: Int,
     val onClick: () -> Unit
 )
 
+/**
+ * Composable function that displays a menu item.
+ *
+ * The menu item is displayed as a [Surface] with a rounded corner shape, a background color,
+ * and padding. The title of the menu item is displayed as a [Text] composable in the center
+ * of the surface.
+ *
+ * @param menuItem The [MenuItem] data class containing the title and onClick action.
+ */
 @Composable
 internal fun MenuItem(menuItem: MenuItem) {
     Surface(

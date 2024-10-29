@@ -10,6 +10,14 @@ import androidx.compose.runtime.Composable
 import ge.space.catalog.main.navigation.LocalNavController
 import androidx.compose.material.icons.Icons.Rounded as MIcons
 
+/**
+ * Composable function that displays the top app bar for a component screen.
+ *
+ * This top app bar includes a back button that navigates to the previous screen
+ * using the [LocalNavController].
+ *
+ * @param title The title of the screen to be displayed in the top app bar.
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun ComponentScreenTopBar(title: String) {

@@ -14,7 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import ge.space.catalog.main.navigation.LocalNavController
-import ge.space.catalog.main.ui.SPDesignSystemComponent
+import ge.space.catalog.main.ui.DesignSystemComponent
 import ge.space.catalog.main.ui.shared.ComponentScreenTopBar
 import ge.space.catalog.main.ui.shared.MenuItem
 import ge.space.catalog.main.utils.plus
@@ -22,8 +22,8 @@ import ge.space.catalog.main.utils.plus
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-internal fun ComponentsListScreen(
-    component: SPDesignSystemComponent
+internal fun GroupComponentScreen(
+    component: DesignSystemComponent
 ) {
     val navigator = LocalNavController.current
 
